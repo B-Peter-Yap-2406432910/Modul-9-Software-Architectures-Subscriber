@@ -14,18 +14,19 @@ impl MessageHandler<UserCreatedEventMessage> for UserCreatedHandler {
         let ten_millis = time::Duration::from_millis(1000); 
         let now = time::Instant::now(); 
         
-        // thread::sleep(ten_millis); 
+        thread::sleep(ten_millis); 
     
         println!("In Peter’s (2406432910) Computer. Message received: {:?}", message); 
         Ok(()) 
     }
+    
     fn get_handler_action(&self) -> String {
-        "user_created_action".to_string() 
+        todo!()
     }
 }
 
 fn main() { 
-    let listener = CrosstownBus::new_queue_listener("amqp://guest:guest@host.docker.internal:5672"
+    let listener = CrosstownBus::new_queue_listener("amqp://guest:guest@localhost:5672"
         .to_owned()).unwrap(); 
     _ = listener.listen("user_created".to_owned(), 
         UserCreatedHandler{}, 
